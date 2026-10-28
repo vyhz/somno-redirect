@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><title>SomnoOptim</title></head>
+<body style="font-family:sans-serif;text-align:center;margin-top:20vh">
+<p id="m">Retour vers SomnoOptim…</p>
+<script>
+// L'app encode son URL de retour dans "state" : base64url({"r":"<url>","n":"<nonce>"}).
+const q = new URLSearchParams(location.search);
+try {
+  const st = JSON.parse(decodeURIComponent(escape(atob(q.get('state').replace(/-/g, '+').replace(/_/g, '/')))));
+  if (!/^(somnooptim|exp):\/\//.test(st.r)) throw 0;
+  const sep = st.r.includes('?') ? '&' : '?';
+  location.replace(st.r + sep + q.toString());
+} catch (e) {
+  document.getElementById('m').textContent = 'Lien de retour invalide.';
+}
+</script>
+</body></html>
